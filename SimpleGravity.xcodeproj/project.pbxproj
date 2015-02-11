@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		30994C451A8BFB0000EB17B2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30994C441A8BFB0000EB17B2 /* main.cpp */; };
+		30994C4D1A8BFB2400EB17B2 /* Planets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30994C4B1A8BFB2400EB17B2 /* Planets.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,8 @@
 /* Begin PBXFileReference section */
 		30994C411A8BFB0000EB17B2 /* SimpleGravity */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SimpleGravity; sourceTree = BUILT_PRODUCTS_DIR; };
 		30994C441A8BFB0000EB17B2 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		30994C4B1A8BFB2400EB17B2 /* Planets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Planets.cpp; sourceTree = "<group>"; };
+		30994C4C1A8BFB2400EB17B2 /* Planets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Planets.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +61,8 @@
 			isa = PBXGroup;
 			children = (
 				30994C441A8BFB0000EB17B2 /* main.cpp */,
+				30994C4B1A8BFB2400EB17B2 /* Planets.cpp */,
+				30994C4C1A8BFB2400EB17B2 /* Planets.h */,
 			);
 			path = SimpleGravity;
 			sourceTree = "<group>";
@@ -119,6 +124,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				30994C451A8BFB0000EB17B2 /* main.cpp in Sources */,
+				30994C4D1A8BFB2400EB17B2 /* Planets.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

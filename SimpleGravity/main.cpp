@@ -7,9 +7,12 @@
 //
 
 #include <iostream>
+#include "Planets.h"
 
 int main(int argc, const char * argv[]) {
     // insert code here...
+    Planet<double> P;
+    P.step(10, 10, 10);
     std::cout << "Hello, World!\n";
     return 0;
 }
