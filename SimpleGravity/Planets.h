@@ -10,11 +10,11 @@
 #define __SimpleGravity__Planets__
 
 #include <cmath>
+#include <iostream>
 
-double G = 6.673 / 100000000000;
+static double G = 6.673 / 100000000000;
 
-
-//template <class T>
+template <class T>
 struct pair {
     T x;
     T y;

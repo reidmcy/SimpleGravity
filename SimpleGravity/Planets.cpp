@@ -3,7 +3,7 @@
 //  SimpleGravity
 //
 //  Created by Reid on 2015-02-11.
-//  Copyright (c) 2015 Reid. All rights reserved.
+//  Copyrigh double (c) 2015 Reid. All rights reserved.
 //
 
 #include "Planets.h"
@@ -22,6 +22,5 @@ pair<T> Planet<T>::gfield(T x, T y) {
     pair<T> ret = {mag * (x - qx), mag * (y - qy)};
     return ret;
 }
-
 template class Planet<double>;
 template struct pair<double>;
