@@ -66,7 +66,7 @@ pair<T> Planet<T>::getField(pair<T> l) {
 template <class T>
 void Planet<T>::getColour(float c[3]) {
     c[0] = 1;
-    c[1] = c[2] = m / 100000000;
+    c[1] = c[2] = m / mMax;
 }
 
 template <class T>
@@ -120,14 +120,14 @@ void System<T>::print() {
 }
 
 template <class T>
-void System<T>::draw(T zoom) {
+void System<T>::draw(T cx, T cy, T zoom) {
     glBegin(GL_POINTS);
     float loc[2];
     float colour[3];
     for (int i = 0; i < count; i++) {
         planets[i].getLocation(loc);
-        loc[0] = loc[0] / zoom;
-        loc[1] = loc[1] / zoom;
+        loc[0] = (loc[0] - cx) * zoom;
+        loc[1] = (loc[1] - cy) * zoom;
         planets[i].getColour(colour);
         glColor3fv(colour);
         glVertex2fv(loc);

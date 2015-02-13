@@ -14,6 +14,6 @@
 std::string window = "SimpleGravity";
 
 int main(int argc, char * argv[]) {
-    System<double> S = setup<double>(100, window, &argc, argv);
+    System<double> S = setup<double>(1000, window, &argc, argv);
     mainloop<double>(&S, &argc, argv);
 }

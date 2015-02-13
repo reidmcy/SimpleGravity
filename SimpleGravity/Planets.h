@@ -17,6 +17,10 @@
 #include <GLUT/glut.h>
 
 
+static double mMax = 10000000;
+static double vMax = 10;
+static double qMax = 100;
+
 static double G = 6.673 / 100000000000;
 
 template <class T>
@@ -53,7 +57,7 @@ public:
     void tick(T h);
     pair<T> getField(int c);
     void print();
-    void draw(T zoom);
+    void draw(T cx, T cy, T zoom);
 };
 
 #endif /* defined(__SimpleGravity__Planets__) */

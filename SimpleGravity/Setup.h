@@ -16,11 +16,6 @@
 
 #include "Planets.h"
 
-static double mMax = 100000000;
-static double vMax = 1;
-static double qMax = 100;
-
-
 template <class T>
 System<T> setup(int n, std::string w, int* argc, char* argv[]);
 
@@ -29,6 +24,8 @@ void mainloop(System<T>* S, int* argc, char* argv[]);
 
 void display();
 void idle();
+void keyb(unsigned char k, int x, int y);
+void skeyb(int k, int x, int y);
 
 
 #endif /* defined(__SimpleGravity__Setup__) */

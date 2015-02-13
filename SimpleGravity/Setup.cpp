@@ -8,7 +8,11 @@
 
 #include "Setup.h"
 
+static double moveDist = .1;
+
 System<double>* MainSystem;
+double cameraX, cameraY, zoom;
+
 
 template <class T>
 System<T> setup(int n, std::string w, int* argc, char* argv[]) {
@@ -31,9 +35,13 @@ System<T> setup(int n, std::string w, int* argc, char* argv[]) {
 template <class T>
 void mainloop(System<T>* S, int* argc, char* argv[]) {
     MainSystem = S;
+    cameraX = cameraY = 0;
+    zoom = 0.001;
     glutFullScreen();
     glutDisplayFunc(display);
     glutIdleFunc(idle);
+    glutKeyboardFunc(keyb);
+    glutSpecialFunc(skeyb);
     glutMainLoop();
 }
 
@@ -41,13 +49,53 @@ void mainloop(System<T>* S, int* argc, char* argv[]) {
 void display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0, 0, 0, 0);
-    MainSystem->draw(1000);
+    MainSystem->draw(cameraX, cameraY, zoom);
     glutSwapBuffers();
 }
 
 void idle() {
     MainSystem->tick(0.1);
     display();
+}
+
+void keyb(unsigned char k, int x, int y) {
+    switch (k) {
+        case 27:
+            exit(EXIT_SUCCESS);
+            break;
+        case '+':
+            zoom = zoom * 2;
+            break;
+        case '=':
+            zoom = zoom * 2;
+            break;
+        case '-':
+            zoom = zoom / 2;
+        case '_':
+            zoom = zoom / 2;
+            break;
+        default:
+            break;
+    }
+}
+
+void skeyb(int k, int x, int y) {
+    switch (k) {
+        case GLUT_KEY_LEFT:
+            cameraX -= moveDist / zoom;
+            break;
+        case GLUT_KEY_RIGHT:
+            cameraX += moveDist / zoom;
+            break;
+        case GLUT_KEY_UP:
+            cameraY += moveDist / zoom;
+            break;
+        case GLUT_KEY_DOWN:
+            cameraY -= moveDist / zoom;
+            break;
+        default:
+            break;
+    }
 }
 
 template System<double> setup<double>(int n, std::string w, int* argc, char* argv[]);
