@@ -9,6 +9,11 @@
 #include "Planets.h"
 
 template <class T>
+pair<T> operator+(const pair<T> &p1, const pair<T> &p2) {
+    return {p1.x + p2.x, p1.y + p2.y};
+}
+
+template <class T>
 Planet<T>::Planet() {
     qx = qy = vx = vy = m = 0;
     //std::cout << "Planet created" << std::endl;
@@ -33,23 +38,23 @@ void Planet<T>::set(T qxi, T qyi, T vxi, T vyi, T mi) {
 }
 
 template <class T>
-void Planet<T>::step(T gx, T gy, T h) {
+void Planet<T>::step(pair<T> l, T h) {
     qx = qx + vx * h;
     qy = qy + vy * h;
-    vx = vx + gx * h;
-    vy = vy + gy * h;
+    vx = vx + l.x * h;
+    vy = vy + l.y * h;
 }
-/*
+
 template <class T>
 pair<T> Planet<T>::getLocation() {
     pair<T> ret = {qx, qy};
     return ret;
 }
-*/
+
 template <class T>
-pair<T> Planet<T>::gfield(T x, T y) {
-    T mag = G * m / std::cbrt((x - qx) * (x - qx) + (y - qy) * (y - qy));
-    pair<T> ret = {mag * (x - qx), mag * (y - qy)};
+pair<T> Planet<T>::getField(pair<T> l) {
+    T mag = G * m / std::cbrt((l.x - qx) * (l.x - qx) + (l.y - qy) * (l.y - qy));
+    pair<T> ret = {mag * (l.x - qx), mag * (l.y - qy)};
     return ret;
 }
 
@@ -72,15 +77,28 @@ System<T>::~System<T>() {
     delete [] planets;
 }
 
-/*
+
 template <class T>
 void System<T>::tick(T h) {
     for (int i = 0; i < count; i++) {
-        gField[i] = getField(planets[i].getLocation());
+        gField[i] = getField(i);
     }
-    
+    for (int i = 0; i < count; i++) {
+        planets[i].step(gField[i], h);
+    }
 }
-*/
+
+template <class T>
+pair<T> System<T>::getField(int c) {
+    pair<T> ret = {0, 0};
+    for (int i = 0; i < count; i++) {
+        if (i != c) {
+            ret = ret + planets[i].getField(planets[c].getLocation());
+        }
+    }
+    return ret;
+}
+
 template <class T>
 void System<T>::print() {
     for(int i = 0; i < count; i++) {
@@ -89,7 +107,6 @@ void System<T>::print() {
         std::cout << std::endl;
     }
 }
-
 
 template class System<double>;
 template class Planet<double>;

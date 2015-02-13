@@ -30,9 +30,9 @@ public:
     Planet(T qxi, T qyi, T vxi, T vyi, T mi);
     ~Planet() = default;
     void set(T qxi, T qyi, T vxi, T vyi, T mi);
-    void step(T gx, T gy, T h);
+    void step(pair<T> l, T h);
     pair<T> getLocation();
-    pair<T> gfield(T x, T y);
+    pair<T> getField(pair<T> l);
     void print();
 };
 
@@ -44,8 +44,8 @@ public:
     pair<T>* gField;
     System(int c, Planet<T>* p);
     ~System();
-    //void tick(T h);
-    //pair<T> getField(pair<T> q);
+    void tick(T h);
+    pair<T> getField(int c);
     void print();
 };
 

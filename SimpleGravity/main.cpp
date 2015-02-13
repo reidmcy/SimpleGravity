@@ -12,6 +12,8 @@
 #include "Setup.h"
 
 int main(int argc, const char * argv[]) {
-    System<double> S = setup<double>(10);
+    System<double> S = setup<double>(2);
+    S.print();
+    S.tick(10);
     S.print();
 }
