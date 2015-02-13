@@ -17,7 +17,7 @@
 #include "Planets.h"
 
 template <class T>
-System<T> setup(int n, std::string w, int* argc, char* argv[]);
+System<T> setup(int n, T h, std::string w, int* argc, char* argv[]);
 
 template <class T>
 void mainloop(System<T>* S, int* argc, char* argv[]);

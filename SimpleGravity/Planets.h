@@ -11,17 +11,16 @@
 
 #include <cmath>
 #include <iostream>
-#include <random>
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
 #include <GLUT/glut.h>
 
 
-static double mMax = 10000000;
-static double vMax = 100;
-static double qMax = 10000;
+static double mMax = pow(10, 25);
+static double vMax = 1;
+static double qMax = 100000000;
 
-static double G = 6.673 / 100000000000;
+static double G = 6.673 / 100000000000; //N * m^2 / kg^2
 
 template <class T>
 struct pair {
@@ -32,13 +31,17 @@ struct pair {
 
 template <class T>
 class Planet {
-    T qx, qy, vx, vy, m;
+    T qx, qy, vx, vy, m, h;
+    T lpvx, lpvy;
+    bool lpRun;
 public:
     Planet();
     Planet(T qxi, T qyi, T vxi, T vyi, T mi);
     ~Planet() = default;
-    void set(T qxi, T qyi, T vxi, T vyi, T mi);
-    void step(pair<T> l, T h);
+    void set(T qxi, T qyi, T vxi, T vyi, T mi, T hi);
+    void setStep(T hn);
+    void stepEuler(pair<T> l);
+    void stepLeapFrog(pair<T> l);
     pair<T> getLocation();
     void getLocation(float l[2]);
     pair<T> getField(pair<T> l);

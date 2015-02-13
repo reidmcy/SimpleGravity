@@ -26,23 +26,47 @@ Planet<T>::Planet(T qxi, T qyi, T vxi, T vyi, T mi) {
     vx = vxi;
     vy = vyi;
     m = mi;
+    h = 1;
+    lpRun = false;
 }
 
 template <class T>
-void Planet<T>::set(T qxi, T qyi, T vxi, T vyi, T mi) {
+void Planet<T>::set(T qxi, T qyi, T vxi, T vyi, T mi, T hi) {
     qx = qxi;
     qy = qyi;
     vx = vxi;
     vy = vyi;
     m = mi;
+    h = hi;
+    lpRun = false;
 }
 
 template <class T>
-void Planet<T>::step(pair<T> l, T h) {
+void Planet<T>::setStep(T hn) {
+    h = hn;
+}
+
+template <class T>
+void Planet<T>::stepEuler(pair<T> l) {
     qx = qx + vx * h;
     qy = qy + vy * h;
-    vx = vx + l.x * h;
-    vy = vy + l.y * h;
+    vx = vx + l.x * h / m;
+    vy = vy + l.y * h / m;
+}
+
+template <class T>
+void Planet<T>::stepLeapFrog(pair<T> l) {
+    T ax = m * l.x;
+    T ay = m * l.y;
+    if (lpRun == false) {
+        lpvx = vx + ax * h / 2;
+        lpvy = vy + ay * h / 2;
+    } else {
+    lpvx = lpvx + ax * h;
+    lpvy = lpvy + ay * h;
+    }
+    qx = qx + lpvx * h;
+    qy = qy + lpvy * h;
 }
 
 template <class T>
@@ -95,7 +119,7 @@ void System<T>::tick(T h) {
         gField[i] = getField(i);
     }
     for (int i = 0; i < count; i++) {
-        planets[i].step(gField[i], h);
+        planets[i].stepEuler(gField[i]);
     }
 }
 

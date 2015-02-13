@@ -12,8 +12,10 @@
 #include "Setup.h"
 
 std::string window = "SimpleGravity";
+int planetCount = 1000;
+double step = 1000;
 
 int main(int argc, char * argv[]) {
-    System<double> S = setup<double>(500, window, &argc, argv);
+    System<double> S = setup<double>(planetCount, step, window, &argc, argv);
     mainloop<double>(&S, &argc, argv);
 }

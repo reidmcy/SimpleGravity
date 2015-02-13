@@ -14,29 +14,29 @@ static double zoomDelta = 1.5;
 System<double>* MainSystem;
 double cameraX = 0;
 double cameraY = 0;
-double zoom = 0.00005;
+double zoom = 0.0000005;
 
 
 template <class T>
-System<T> setup(int n, std::string w, int* argc, char* argv[]) {
+System<T> setup(int n, T h, std::string w, int* argc, char* argv[]) {
     glutInit(argc,argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
     glutCreateWindow(w.c_str());
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<T> mDist(mMax / 10, mMax);
-    std::normal_distribution<T> vDist(vMax / 10, vMax);
+    std::normal_distribution<T> vDist(-vMax, vMax);
     std::uniform_real_distribution<T> qDist(-qMax, qMax);
     Planet<T>* P;
     P = new Planet<T>[n];
-    P[0].set(0,0,0,0, mMax * 100);
-    for (int i = 1; i < n; i++) {
+    for (int i = 0; i < n; i++) {
         T qxi = qDist(gen);
         T qyi = qDist(gen);
-        T vxi = (qyi > 0) ? vDist(gen) : (- vDist(gen));
-        T vyi = (qxi < 0) ? vDist(gen) : (- vDist(gen));
-        P[i].set(qxi, qyi, vxi, vyi, mDist(gen));
+        T vxi = vDist(gen); //(qyi > 0) ? vDist(gen) : (- vDist(gen));
+        T vyi = vDist(gen); //(qxi < 0) ? vDist(gen) : (- vDist(gen));
+        P[i].set(qxi, qyi, vxi, vyi, mDist(gen), h);
     }
+    P[0].set(0,0,0,0, mMax * 100000, h);
     return System<T>(n, P);
 }
 
@@ -107,5 +107,5 @@ void skeyb(int k, int x, int y) {
     }
 }
 
-template System<double> setup<double>(int n, std::string w, int* argc, char* argv[]);
+template System<double> setup<double>(int n, double h, std::string w, int* argc, char* argv[]);
 template void mainloop<double>(System<double>* S, int* argc, char* argv[]);
