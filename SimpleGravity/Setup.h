@@ -16,9 +16,9 @@
 
 #include "Planets.h"
 
-static double mMax = 100000;
-static double vMax = 10;
-static double qMax = 1;
+static double mMax = 100000000;
+static double vMax = 1;
+static double qMax = 100;
 
 
 template <class T>

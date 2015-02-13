@@ -50,12 +50,23 @@ pair<T> Planet<T>::getLocation() {
     pair<T> ret = {qx, qy};
     return ret;
 }
+template <class T>
+void Planet<T>::getLocation(float l[2]) {
+    l[0] = (float) qx;
+    l[1] = (float) qy;
+}
 
 template <class T>
 pair<T> Planet<T>::getField(pair<T> l) {
-    T mag = G * m / std::cbrt((l.x - qx) * (l.x - qx) + (l.y - qy) * (l.y - qy));
+    T mag =  - G * m / std::cbrt((l.x - qx) * (l.x - qx) + (l.y - qy) * (l.y - qy));
     pair<T> ret = {mag * (l.x - qx), mag * (l.y - qy)};
     return ret;
+}
+
+template <class T>
+void Planet<T>::getColour(float c[3]) {
+    c[0] = 1;
+    c[1] = c[2] = m / 100000000;
 }
 
 template <class T>
@@ -106,6 +117,22 @@ void System<T>::print() {
         planets[i].print();
         std::cout << std::endl;
     }
+}
+
+template <class T>
+void System<T>::draw(T zoom) {
+    glBegin(GL_POINTS);
+    float loc[2];
+    float colour[3];
+    for (int i = 0; i < count; i++) {
+        planets[i].getLocation(loc);
+        loc[0] = loc[0] / zoom;
+        loc[1] = loc[1] / zoom;
+        planets[i].getColour(colour);
+        glColor3fv(colour);
+        glVertex2fv(loc);
+    }
+    glEnd();
 }
 
 template class System<double>;
