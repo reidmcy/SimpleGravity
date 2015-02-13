@@ -11,6 +11,7 @@
 
 #include <cmath>
 #include <iostream>
+#include <random>
 
 static double G = 6.673 / 100000000000;
 
@@ -23,10 +24,29 @@ struct pair {
 
 template <class T>
 class Planet {
-public:
     T qx, qy, vx, vy, m;
+public:
+    Planet();
+    Planet(T qxi, T qyi, T vxi, T vyi, T mi);
+    ~Planet() = default;
+    void set(T qxi, T qyi, T vxi, T vyi, T mi);
     void step(T gx, T gy, T h);
+    pair<T> getLocation();
     pair<T> gfield(T x, T y);
+    void print();
+};
+
+template <class T>
+class System {
+public:
+    int count;
+    Planet<T>* planets;
+    pair<T>* gField;
+    System(int c, Planet<T>* p);
+    ~System();
+    //void tick(T h);
+    //pair<T> getField(pair<T> q);
+    void print();
 };
 
 #endif /* defined(__SimpleGravity__Planets__) */
