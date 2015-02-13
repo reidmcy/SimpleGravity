@@ -10,16 +10,25 @@
 #define __SimpleGravity__Setup__
 
 #include <random>
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+#include <GLUT/glut.h>
 
 #include "Planets.h"
 
-static double mMax = 10;
+static double mMax = 100000;
 static double vMax = 10;
-static double qMax = 100;
+static double qMax = 1;
 
 
 template <class T>
-System<T> setup(int n);
+System<T> setup(int n, std::string w, int* argc, char* argv[]);
+
+template <class T>
+void mainloop(System<T>* S, int* argc, char* argv[]);
+
+void display();
+void idle();
 
 
 #endif /* defined(__SimpleGravity__Setup__) */

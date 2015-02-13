@@ -11,9 +11,9 @@
 #include "Planets.h"
 #include "Setup.h"
 
-int main(int argc, const char * argv[]) {
-    System<double> S = setup<double>(2);
-    S.print();
-    S.tick(10);
-    S.print();
+std::string window = "SimpleGravity";
+
+int main(int argc, char * argv[]) {
+    System<double> S = setup<double>(2, window, &argc, argv);
+    mainloop<double>(&S, &argc, argv);
 }

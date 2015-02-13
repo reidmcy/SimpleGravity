@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		307B82AF1A8DEC3B0079BCB7 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307B82AE1A8DEC3B0079BCB7 /* GLUT.framework */; };
+		307B82B11A8DEC410079BCB7 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307B82B01A8DEC410079BCB7 /* OpenGL.framework */; };
+		307B82B31A8DEC470079BCB7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307B82B21A8DEC470079BCB7 /* Cocoa.framework */; };
 		30994C451A8BFB0000EB17B2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30994C441A8BFB0000EB17B2 /* main.cpp */; };
 		30994C4D1A8BFB2400EB17B2 /* Planets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30994C4B1A8BFB2400EB17B2 /* Planets.cpp */; };
 		30C520C31A8DCBFE00AFB505 /* Setup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30C520C11A8DCBFE00AFB505 /* Setup.cpp */; };
@@ -25,6 +28,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		307B82AE1A8DEC3B0079BCB7 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		307B82B01A8DEC410079BCB7 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		307B82B21A8DEC470079BCB7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		30994C411A8BFB0000EB17B2 /* SimpleGravity */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SimpleGravity; sourceTree = BUILT_PRODUCTS_DIR; };
 		30994C441A8BFB0000EB17B2 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		30994C4B1A8BFB2400EB17B2 /* Planets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Planets.cpp; sourceTree = "<group>"; };
@@ -38,6 +44,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				307B82B31A8DEC470079BCB7 /* Cocoa.framework in Frameworks */,
+				307B82B11A8DEC410079BCB7 /* OpenGL.framework in Frameworks */,
+				307B82AF1A8DEC3B0079BCB7 /* GLUT.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,6 +56,9 @@
 		30994C381A8BFB0000EB17B2 = {
 			isa = PBXGroup;
 			children = (
+				307B82B21A8DEC470079BCB7 /* Cocoa.framework */,
+				307B82B01A8DEC410079BCB7 /* OpenGL.framework */,
+				307B82AE1A8DEC3B0079BCB7 /* GLUT.framework */,
 				30994C431A8BFB0000EB17B2 /* SimpleGravity */,
 				30994C421A8BFB0000EB17B2 /* Products */,
 			);
@@ -170,7 +182,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -205,7 +217,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
