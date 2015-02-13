@@ -18,8 +18,8 @@
 
 
 static double mMax = 10000000;
-static double vMax = 10;
-static double qMax = 100;
+static double vMax = 100;
+static double qMax = 10000;
 
 static double G = 6.673 / 100000000000;
 

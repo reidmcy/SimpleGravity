@@ -9,9 +9,12 @@
 #include "Setup.h"
 
 static double moveDist = .1;
+static double zoomDelta = 1.5;
 
 System<double>* MainSystem;
-double cameraX, cameraY, zoom;
+double cameraX = 0;
+double cameraY = 0;
+double zoom = 0.00005;
 
 
 template <class T>
@@ -21,13 +24,18 @@ System<T> setup(int n, std::string w, int* argc, char* argv[]) {
     glutCreateWindow(w.c_str());
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::normal_distribution<T> mDist(mMax / 10, mMax);
-    std::normal_distribution<T> vDist(-vMax, vMax);
-    std::normal_distribution<T> qDist(-qMax, qMax);
+    std::uniform_real_distribution<T> mDist(mMax / 10, mMax);
+    std::normal_distribution<T> vDist(vMax / 10, vMax);
+    std::uniform_real_distribution<T> qDist(-qMax, qMax);
     Planet<T>* P;
     P = new Planet<T>[n];
-    for (int i = 0; i < n; i++) {
-        P[i].set(qDist(gen), qDist(gen), vDist(gen), vDist(gen), mDist(gen));
+    P[0].set(0,0,0,0, mMax * 100);
+    for (int i = 1; i < n; i++) {
+        T qxi = qDist(gen);
+        T qyi = qDist(gen);
+        T vxi = (qyi > 0) ? vDist(gen) : (- vDist(gen));
+        T vyi = (qxi < 0) ? vDist(gen) : (- vDist(gen));
+        P[i].set(qxi, qyi, vxi, vyi, mDist(gen));
     }
     return System<T>(n, P);
 }
@@ -35,8 +43,6 @@ System<T> setup(int n, std::string w, int* argc, char* argv[]) {
 template <class T>
 void mainloop(System<T>* S, int* argc, char* argv[]) {
     MainSystem = S;
-    cameraX = cameraY = 0;
-    zoom = 0.001;
     glutFullScreen();
     glutDisplayFunc(display);
     glutIdleFunc(idle);
@@ -63,16 +69,19 @@ void keyb(unsigned char k, int x, int y) {
         case 27:
             exit(EXIT_SUCCESS);
             break;
+        case 'q':
+            exit(EXIT_SUCCESS);
+            break;
         case '+':
-            zoom = zoom * 2;
+            zoom = zoom * zoomDelta;
             break;
         case '=':
-            zoom = zoom * 2;
+            zoom = zoom * zoomDelta;
             break;
         case '-':
-            zoom = zoom / 2;
+            zoom = zoom / zoomDelta;
         case '_':
-            zoom = zoom / 2;
+            zoom = zoom / zoomDelta;
             break;
         default:
             break;
