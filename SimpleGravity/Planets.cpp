@@ -8,6 +8,12 @@
 
 #include "Planets.h"
 
+void fanHelper(float i[2], float f[2], float r, float theta) {
+    f[0] = i[0] + r * cosf(theta);
+    f[1] = i[1] + r * sinf(theta);
+}
+
+
 template <class T>
 pair<T> operator+(const pair<T> &p1, const pair<T> &p2) {
     return {p1.x + p2.x, p1.y + p2.y};
@@ -16,6 +22,7 @@ pair<T> operator+(const pair<T> &p1, const pair<T> &p2) {
 template <class T>
 Planet<T>::Planet() {
     qx = qy = vx = vy = m = 0;
+    cr = cb = cg = .5;
     //std::cout << "Planet created" << std::endl;
 }
 
@@ -28,6 +35,7 @@ Planet<T>::Planet(T qxi, T qyi, T vxi, T vyi, T mi) {
     m = mi;
     h = 1;
     lpRun = false;
+    cr = cb = cg = .5;
 }
 
 template <class T>
@@ -56,17 +64,17 @@ void Planet<T>::stepEuler(pair<T> l) {
 
 template <class T>
 void Planet<T>::stepLeapFrog(pair<T> l) {
-    T ax = m * l.x;
-    T ay = m * l.y;
+    T ax = l.x / m;
+    T ay = l.y / m;
     if (lpRun == false) {
-        lpvx = vx + ax * h / 2;
-        lpvy = vy + ay * h / 2;
+        vx = vx + ax * h / 2;
+        vy = vy + ay * h / 2;
     } else {
-    lpvx = lpvx + ax * h;
-    lpvy = lpvy + ay * h;
+    vx = vx + ax * h;
+    vy = vy + ay * h;
     }
-    qx = qx + lpvx * h;
-    qy = qy + lpvy * h;
+    qx = qx + vx * h;
+    qy = qy + vy * h;
 }
 
 template <class T>
@@ -89,8 +97,22 @@ pair<T> Planet<T>::getField(pair<T> l) {
 
 template <class T>
 void Planet<T>::getColour(float c[3]) {
-    c[0] = 1;
-    c[1] = c[2] = m / mMax;
+    c[0] = cr;
+    c[1] = cg;
+    c[2] = cb;
+}
+
+template <class T>
+void Planet<T>::setColour(float r, float g, float b) {
+    cr = r;
+    cg = g;
+    cb = b;
+}
+
+template<class T>
+void Planet<T>::setColourToMass() {
+    cr = 1;
+    cg = cb = m / mMax;
 }
 
 template <class T>
@@ -119,7 +141,7 @@ void System<T>::tick(T h) {
         gField[i] = getField(i);
     }
     for (int i = 0; i < count; i++) {
-        planets[i].stepEuler(gField[i]);
+        planets[i].stepLeapFrog(gField[i]);
     }
 }
 
@@ -145,18 +167,24 @@ void System<T>::print() {
 
 template <class T>
 void System<T>::draw(T cx, T cy, T zoom) {
-    glBegin(GL_POINTS);
+    
     float loc[2];
+    float surface[2];
     float colour[3];
     for (int i = 0; i < count; i++) {
         planets[i].getLocation(loc);
         loc[0] = (loc[0] - cx) * zoom;
         loc[1] = (loc[1] - cy) * zoom;
         planets[i].getColour(colour);
+        glBegin(GL_TRIANGLE_FAN);
         glColor3fv(colour);
         glVertex2fv(loc);
+        for (int i = 0; i < circlePoints + 1; i ++) {
+            fanHelper(loc, surface, 1000 * zoom, i * M_PI * 2 / circlePoints);
+            glVertex2fv(surface);
+        }
+        glEnd();
     }
-    glEnd();
 }
 
 template class System<double>;

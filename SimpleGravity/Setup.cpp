@@ -24,19 +24,22 @@ System<T> setup(int n, T h, std::string w, int* argc, char* argv[]) {
     glutCreateWindow(w.c_str());
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_real_distribution<T> mDist(mMax / 10, mMax);
+    std::uniform_real_distribution<T> mDist(mMax, mMax);
     std::normal_distribution<T> vDist(-vMax, vMax);
     std::uniform_real_distribution<T> qDist(-qMax, qMax);
+    std::normal_distribution<T> cDist(0, 1);
     Planet<T>* P;
     P = new Planet<T>[n];
     for (int i = 0; i < n; i++) {
         T qxi = qDist(gen);
         T qyi = qDist(gen);
-        T vxi = vDist(gen); //(qyi > 0) ? vDist(gen) : (- vDist(gen));
-        T vyi = vDist(gen); //(qxi < 0) ? vDist(gen) : (- vDist(gen));
+        T vxi = (qyi > 0) ? vDist(gen) : (- vDist(gen));
+        T vyi = (qxi < 0) ? vDist(gen) : (- vDist(gen));
         P[i].set(qxi, qyi, vxi, vyi, mDist(gen), h);
+        P[i].setColour(cDist(gen), cDist(gen), cDist(gen));
     }
-    P[0].set(0,0,0,0, mMax * 100000, h);
+    P[0].set(0,0,0,0, mMax * 1000, h);
+    P[0].setColour(1,1,1);
     return System<T>(n, P);
 }
 
@@ -44,6 +47,7 @@ template <class T>
 void mainloop(System<T>* S, int* argc, char* argv[]) {
     MainSystem = S;
     glutFullScreen();
+    glutSetCursor(GLUT_CURSOR_NONE);
     glutDisplayFunc(display);
     glutIdleFunc(idle);
     glutKeyboardFunc(keyb);

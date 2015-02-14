@@ -18,8 +18,9 @@
 
 static double mMax = pow(10, 25);
 static double vMax = 1;
-static double qMax = 100000000;
+static double qMax = 100000;
 
+static int circlePoints = 16;
 static double G = 6.673 / 100000000000; //N * m^2 / kg^2
 
 template <class T>
@@ -31,8 +32,8 @@ struct pair {
 
 template <class T>
 class Planet {
+    float cr, cb, cg;
     T qx, qy, vx, vy, m, h;
-    T lpvx, lpvy;
     bool lpRun;
 public:
     Planet();
@@ -46,6 +47,8 @@ public:
     void getLocation(float l[2]);
     pair<T> getField(pair<T> l);
     void getColour(float c[3]);
+    void setColour(float r, float g, float b);
+    void setColourToMass();
     void print();
 };
 
