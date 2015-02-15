@@ -81,6 +81,7 @@ void Planet<T>::stepLeapFrog(pair<T> g) {
     qy = qy + vy * h;
 }
 
+/*
 template <class T>
 void Planet<T>::stepBashforth(pair<T> g) {
     T fx = g.x;
@@ -97,6 +98,7 @@ void Planet<T>::stepBashforth(pair<T> g) {
     qx = qx + vx * h;
     qy = qy + vy * h;
 }
+*/
 
 template <class T>
 pair<T> Planet<T>::getLocation() {
