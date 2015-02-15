@@ -11,10 +11,13 @@
 static double moveDist = .1;
 static double zoomDelta = 1.5;
 
+bool testing = false;
+int testingCount = 100;
+
 System<double>* MainSystem;
 double cameraX = 0;
 double cameraY = 0;
-double zoom = 0.0000005;
+double zoom = 1 / qMax;
 
 
 template <class T>
@@ -44,7 +47,8 @@ System<T> setup(int n, T h, std::string w, int* argc, char* argv[]) {
 }
 
 template <class T>
-void mainloop(System<T>* S, int* argc, char* argv[]) {
+void mainloop(System<T>* S, int* argc, char* argv[], bool t) {
+    testing = t;
     MainSystem = S;
     glutFullScreen();
     glutSetCursor(GLUT_CURSOR_NONE);
@@ -66,6 +70,12 @@ void display() {
 void idle() {
     MainSystem->tick(0.1);
     display();
+    if (testing) {
+        testingCount -= 1;
+        if (testingCount <= 0) {
+            exit(EXIT_SUCCESS);
+        }
+    }
 }
 
 void keyb(unsigned char k, int x, int y) {
@@ -112,4 +122,4 @@ void skeyb(int k, int x, int y) {
 }
 
 template System<double> setup<double>(int n, double h, std::string w, int* argc, char* argv[]);
-template void mainloop<double>(System<double>* S, int* argc, char* argv[]);
+template void mainloop<double>(System<double>* S, int* argc, char* argv[], bool t);

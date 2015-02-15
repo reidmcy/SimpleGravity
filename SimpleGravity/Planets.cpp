@@ -96,6 +96,22 @@ pair<T> Planet<T>::getField(pair<T> l) {
 }
 
 template <class T>
+void Planet<T>::draw(float cx, float cy, T zoom) {
+    float loc[2];
+    float surface[2];
+    loc[0] = (qx - cx) * zoom;
+    loc[1] = (qy - cy) * zoom;
+    glBegin(GL_TRIANGLE_FAN);
+    glColor3f(cr, cg, cb);
+    glVertex2fv(loc);
+    for (int i = 0; i < circlePoints + 1; i ++) {
+        fanHelper(loc, surface, pow(10, 11) * zoom, i * M_PI * 2 / circlePoints);
+        glVertex2fv(surface);
+    }
+    glEnd();
+}
+
+template <class T>
 void Planet<T>::getColour(float c[3]) {
     c[0] = cr;
     c[1] = cg;
@@ -127,33 +143,37 @@ System<T>::System(int c, Planet<T>* p) {
     planets = p;
     count = c;
     gField = new pair<T>[c];
+    pthreads = new std::thread[count];
 }
 
 template <class T>
 System<T>::~System<T>() {
     delete [] planets;
+    delete [] gField;
+    delete [] pthreads;
 }
 
 
 template <class T>
 void System<T>::tick(T h) {
     for (int i = 0; i < count; i++) {
-        gField[i] = getField(i);
+        pthreads[i] = std::thread(&System::getField, this, i);
     }
     for (int i = 0; i < count; i++) {
+        pthreads[i].join();
         planets[i].stepLeapFrog(gField[i]);
     }
 }
 
 template <class T>
-pair<T> System<T>::getField(int c) {
+void System<T>::getField(int c) {
     pair<T> ret = {0, 0};
     for (int i = 0; i < count; i++) {
         if (i != c) {
             ret = ret + planets[i].getField(planets[c].getLocation());
         }
     }
-    return ret;
+    gField[c] = ret;
 }
 
 template <class T>
@@ -164,26 +184,10 @@ void System<T>::print() {
         std::cout << std::endl;
     }
 }
-
 template <class T>
 void System<T>::draw(T cx, T cy, T zoom) {
-    
-    float loc[2];
-    float surface[2];
-    float colour[3];
     for (int i = 0; i < count; i++) {
-        planets[i].getLocation(loc);
-        loc[0] = (loc[0] - cx) * zoom;
-        loc[1] = (loc[1] - cy) * zoom;
-        planets[i].getColour(colour);
-        glBegin(GL_TRIANGLE_FAN);
-        glColor3fv(colour);
-        glVertex2fv(loc);
-        for (int i = 0; i < circlePoints + 1; i ++) {
-            fanHelper(loc, surface, 1000 * zoom, i * M_PI * 2 / circlePoints);
-            glVertex2fv(surface);
-        }
-        glEnd();
+        planets[i].draw(cx, cy, zoom);
     }
 }
 
