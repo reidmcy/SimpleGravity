@@ -12,6 +12,7 @@
 		307B82B31A8DEC470079BCB7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307B82B21A8DEC470079BCB7 /* Cocoa.framework */; };
 		30994C451A8BFB0000EB17B2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30994C441A8BFB0000EB17B2 /* main.cpp */; };
 		30994C4D1A8BFB2400EB17B2 /* Planets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30994C4B1A8BFB2400EB17B2 /* Planets.cpp */; };
+		309E8A791A90426B0015E3D0 /* Barnes-Hut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309E8A771A90426B0015E3D0 /* Barnes-Hut.cpp */; };
 		30C520C31A8DCBFE00AFB505 /* Setup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30C520C11A8DCBFE00AFB505 /* Setup.cpp */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,8 @@
 		30994C441A8BFB0000EB17B2 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		30994C4B1A8BFB2400EB17B2 /* Planets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Planets.cpp; sourceTree = "<group>"; };
 		30994C4C1A8BFB2400EB17B2 /* Planets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Planets.h; sourceTree = "<group>"; };
+		309E8A771A90426B0015E3D0 /* Barnes-Hut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Barnes-Hut.cpp"; sourceTree = "<group>"; };
+		309E8A781A90426B0015E3D0 /* Barnes-Hut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Barnes-Hut.h"; sourceTree = "<group>"; };
 		30C520C11A8DCBFE00AFB505 /* Setup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Setup.cpp; sourceTree = "<group>"; };
 		30C520C21A8DCBFE00AFB505 /* Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Setup.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -80,6 +83,8 @@
 				30994C4C1A8BFB2400EB17B2 /* Planets.h */,
 				30C520C11A8DCBFE00AFB505 /* Setup.cpp */,
 				30C520C21A8DCBFE00AFB505 /* Setup.h */,
+				309E8A771A90426B0015E3D0 /* Barnes-Hut.cpp */,
+				309E8A781A90426B0015E3D0 /* Barnes-Hut.h */,
 			);
 			path = SimpleGravity;
 			sourceTree = "<group>";
@@ -140,6 +145,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				309E8A791A90426B0015E3D0 /* Barnes-Hut.cpp in Sources */,
 				30994C451A8BFB0000EB17B2 /* main.cpp in Sources */,
 				30994C4D1A8BFB2400EB17B2 /* Planets.cpp in Sources */,
 				30C520C31A8DCBFE00AFB505 /* Setup.cpp in Sources */,

@@ -21,8 +21,10 @@ pair<T> operator+(const pair<T> &p1, const pair<T> &p2) {
 
 template <class T>
 Planet<T>::Planet() {
-    qx = qy = vx = vy = m = 0;
+    qx = qy = vx = vy = 0;
+    m = im = h = 1;
     cr = cb = cg = .5;
+    lpRun = false;
     //std::cout << "Planet created" << std::endl;
 }
 
@@ -33,6 +35,7 @@ Planet<T>::Planet(T qxi, T qyi, T vxi, T vyi, T mi) {
     vx = vxi;
     vy = vyi;
     m = mi;
+    im = 1 / m;
     h = 1;
     lpRun = false;
     cr = cb = cg = .5;
@@ -45,6 +48,7 @@ void Planet<T>::set(T qxi, T qyi, T vxi, T vyi, T mi, T hi) {
     vx = vxi;
     vy = vyi;
     m = mi;
+    im = 1 / m;
     h = hi;
     lpRun = false;
 }
@@ -55,24 +59,41 @@ void Planet<T>::setStep(T hn) {
 }
 
 template <class T>
-void Planet<T>::stepEuler(pair<T> l) {
+void Planet<T>::stepEuler(pair<T> g) {
     qx = qx + vx * h;
     qy = qy + vy * h;
-    vx = vx + l.x * h / m;
-    vy = vy + l.y * h / m;
+    vx = vx + g.x * h * im;
+    vy = vy + g.y * h * im;
 }
 
 template <class T>
-void Planet<T>::stepLeapFrog(pair<T> l) {
-    T ax = l.x / m;
-    T ay = l.y / m;
-    if (lpRun == false) {
+void Planet<T>::stepLeapFrog(pair<T> g) {
+    T ax = g.x * im;
+    T ay = g.y * im;
+    if (!lpRun) {
         vx = vx + ax * h / 2;
         vy = vy + ay * h / 2;
     } else {
     vx = vx + ax * h;
     vy = vy + ay * h;
     }
+    qx = qx + vx * h;
+    qy = qy + vy * h;
+}
+
+template <class T>
+void Planet<T>::stepBashforth(pair<T> g) {
+    T fx = g.x;
+    T fy = g.y;
+    if (!lpRun) {
+        
+    }
+    for (int i = 1; i < BashCount; i++) {
+        fx += bashVals[i].x;
+        fy += bashVals[i].y;
+    }
+    vx = vx + im * h * fx;
+    vy = vy + im * h * fy;
     qx = qx + vx * h;
     qy = qy + vy * h;
 }
@@ -161,7 +182,11 @@ void System<T>::tick(T h) {
     }
     for (int i = 0; i < count; i++) {
         pthreads[i].join();
-        planets[i].stepLeapFrog(gField[i]);
+        pthreads[i] = std::thread(&Planet<T>::stepLeapFrog, &planets[i], gField[i]);
+        //planets[i].stepLeapFrog(gField[i]);
+    }
+    for (int i = 0; i < count; i++) {
+        pthreads[i].join();
     }
 }
 

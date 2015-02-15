@@ -12,7 +12,7 @@
 #include "Setup.h"
 
 std::string window = "SimpleGravity";
-int planetCount = 2000; //tests at 200
+int planetCount = 2000; //tests at 2000
 double step = 100; //tests at 100
 
 bool test = true;
@@ -23,6 +23,7 @@ int main(int argc, char * argv[]) {
 }
 
 /*
-basic : 2.6
-multithreading : 2.6
+basic : 14.5
+field multithreading : 10
+field and step multithreading : 17.2
 */

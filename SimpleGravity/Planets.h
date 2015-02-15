@@ -24,6 +24,9 @@ static double qMax = pow(10, 12);
 static int circlePoints = 16;
 static double G = 6.673 / 100000000000; //N * m^2 / kg^2
 
+static const int BashCount = 3; //cannot be changed without also changing coefficients
+static const double bashCoef[BashCount] = {23. / 12, - 4. / 3, 5. / 12}; //Wikipedia
+
 template <class T>
 struct pair {
     T x;
@@ -34,7 +37,8 @@ struct pair {
 template <class T>
 class Planet {
     float cr, cb, cg;
-    T qx, qy, vx, vy, m, h;
+    T qx, qy, vx, vy, m, im, h;
+    pair<T> bashVals[BashCount];
     bool lpRun;
 public:
     Planet();
@@ -42,8 +46,9 @@ public:
     ~Planet() = default;
     void set(T qxi, T qyi, T vxi, T vyi, T mi, T hi);
     void setStep(T hn);
-    void stepEuler(pair<T> l);
-    void stepLeapFrog(pair<T> l);
+    void stepEuler(pair<T> g);
+    void stepLeapFrog(pair<T> g);
+    void stepBashforth(pair<T> g);
     pair<T> getLocation();
     void getLocation(float l[2]);
     pair<T> getField(pair<T> l);
